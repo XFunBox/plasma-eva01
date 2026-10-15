@@ -1,0 +1,13 @@
+[Desktop Entry]
+Type=Application
+Name=Ordenar ventanas EVA
+Comment=Ordenar las ventanas de cada monitor
+Icon=view-grid
+Exec=qdbus6 org.kde.kglobalaccel /component/kwin org.kde.kglobalaccel.Component.invokeShortcut EVA01ArrangeWindows
+Terminal=false
+Categories=Utility;
+Actions=Restaurar;
+
+[Desktop Action Restaurar]
+Name=Restaurar ventanas
+Exec=qdbus6 org.kde.kglobalaccel /component/kwin org.kde.kglobalaccel.Component.invokeShortcut EVA01RestoreWindows

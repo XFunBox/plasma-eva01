@@ -1,0 +1,12 @@
+{
+  "KPlugin": {
+    "Id": "eva01-ordenar-ventanas",
+    "Name": "Ordenar ventanas EVA-01",
+    "Description": "Ordena las ventanas del escritorio en cada monitor y permite restaurarlas.",
+    "Version": "1.0",
+    "License": "MIT",
+    "EnabledByDefault": true
+  },
+  "X-Plasma-API": "javascript",
+  "KPackageStructure": "KWin/Script"
+}

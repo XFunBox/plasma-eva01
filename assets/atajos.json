@@ -1,0 +1,50 @@
+[
+  {
+    "file": "kglobalshortcutsrc",
+    "group": "kwin",
+    "key": "Window Minimize",
+    "value": "Meta+M,none,Minimizar la ventana"
+  },
+  {
+    "file": "kglobalshortcutsrc",
+    "group": "kwin",
+    "key": "Window Maximize",
+    "value": "Meta+X,none,Maximizar la ventana"
+  },
+  {
+    "file": "kglobalshortcutsrc",
+    "group": "kwin",
+    "key": "Window Quick Tile Left",
+    "value": "Meta+H,none,Situar la ventana en mosaico a la izquierda"
+  },
+  {
+    "file": "kglobalshortcutsrc",
+    "group": "kwin",
+    "key": "Overview",
+    "value": "Meta+W,none,Conmutar a la vista general"
+  },
+  {
+    "file": "kglobalshortcutsrc",
+    "group": "kwin",
+    "key": "Switch to Desktop 1",
+    "value": "Ctrl+Alt+1,none,Cambiar al escritorio 1"
+  },
+  {
+    "file": "kglobalshortcutsrc",
+    "group": "kwin",
+    "key": "Switch to Desktop 2",
+    "value": "Ctrl+Alt+2,none,Cambiar al escritorio 2"
+  },
+  {
+    "file": "kglobalshortcutsrc",
+    "group": "kwin",
+    "key": "EVA01ArrangeWindows",
+    "value": "Meta+O,none,EVA-01: ordenar ventanas"
+  },
+  {
+    "file": "kglobalshortcutsrc",
+    "group": "kwin",
+    "key": "EVA01RestoreWindows",
+    "value": "Meta+Shift+O,none,EVA-01: restaurar ventanas"
+  }
+]
