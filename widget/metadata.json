@@ -1,0 +1,16 @@
+{
+  "KPlugin": {
+    "Id": "com.xfunbox.nervdeck",
+    "Name": "NERV Deck",
+    "Description": "Tu consola de Spotify y Spotifast: música, controles y carátulas con estilo EVA-01.",
+    "Icon": "multimedia-player",
+    "Category": "Multimedia",
+    "Version": "1.0.0",
+    "License": "MIT",
+    "Authors": [{"Name": "Sendoa"}],
+    "Website": "https://github.com/XFunBox/plasma-eva01"
+  },
+  "KPackageStructure": "Plasma/Applet",
+  "X-Plasma-API-Minimum-Version": "6.6",
+  "X-Plasma-FormFactors": ["desktop"]
+}

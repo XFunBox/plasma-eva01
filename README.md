@@ -4,6 +4,21 @@ Mi configuración reutilizable de KDE Plasma: negro, morado y verde vivo, con at
 
 El instalador muestra una simulación por defecto. Solo escribe con `--apply`, guarda una copia previa y permite restaurarla. No cambia la barra de tareas, el fondo, las pantallas ni el número de escritorios virtuales.
 
+## NERV Deck: widget de Spotify y Spotifast
+
+Consola de audio nativa para el escritorio de **Plasma 6.6 o posterior**: carátula, canción y artista, controles, progreso y volumen. Se despliega para mostrar álbum, aleatorio y repetición. Detecta Spotify y Spotifast mediante MPRIS y permite elegir entre ellos si están abiertos a la vez. Sin un reproductor abierto muestra el estado de espera y un acceso a EVA-01 Audio.
+
+Se instala por separado de la personalización del escritorio:
+
+```bash
+python3 instalar-widget.py
+python3 instalar-widget.py --apply
+```
+
+Después, en el escritorio: **Modo de edición → Añadir widgets → NERV Deck**. No añadirlo a la barra. El instalador prepara los archivos y conserva una copia del paquete anterior; no modifica distribuciones de paneles ni inicia reproducción.
+
+[Uso, requisitos, pruebas y restauración de NERV Deck](docs/NERV-DECK.md).
+
 ## Requisitos
 
 - Linux con **KDE Plasma 6 ya instalado**. Las fuentes proceden de un equipo Ubuntu con Plasma 6.6.6; otras distribuciones/versiones necesitan comprobarse.
