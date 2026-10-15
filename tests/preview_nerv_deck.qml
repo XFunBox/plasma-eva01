@@ -5,7 +5,7 @@ import "../widget/contents/ui" as Nerv
 Window {
     id: preview
     visible: true
-    width: 420
+    width: deck.implicitWidth + 40
     height: deck.implicitHeight + 40
     color: "#15111d"
     title: "NERV Deck · vista previa"

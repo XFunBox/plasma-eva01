@@ -6,8 +6,9 @@ Button {
     property string symbol: "play"
     property string label: ""
     property bool primary: false
+    property bool round: false
     property bool highlightedState: false
-    readonly property color ink: !enabled ? "#696477" : primary ? "#08080b" : highlightedState ? "#b7ff3c" : "#eee9f7"
+    readonly property color ink: !enabled ? "#696477" : round || primary || highlightedState ? "#b7ff3c" : "#c5b3d2"
     implicitWidth: 36
     implicitHeight: 36
     padding: 8
@@ -19,11 +20,21 @@ Button {
     ToolTip.delay: 650
     HoverHandler { cursorShape: control.enabled ? Qt.PointingHandCursor : Qt.ArrowCursor }
     background: Rectangle {
-        color: control.primary ? (control.down ? "#93d421" : "#b7ff3c") : control.down ? "#4b3165" : control.hovered ? "#30203f" : "#191321"
-        border.color: control.activeFocus ? "#eee9f7" : control.highlightedState ? "#b7ff3c" : "#49305e"
+        color: control.down ? "#0c0d0e" : control.hovered ? "#303132" : "#17191a"
+        gradient: Gradient {
+            GradientStop { position: 0; color: control.down ? "#101112" : control.hovered ? "#383a3b" : "#303233" }
+            GradientStop { position: 0.55; color: "#1d1f20" }
+            GradientStop { position: 1; color: "#101112" }
+        }
+        border.color: control.activeFocus ? "#eee9f7" : control.highlightedState ? "#b7ff3c" : control.round ? "#4b4e50" : "#49305e"
         border.width: control.activeFocus ? 2 : 1
-        radius: 3
+        radius: control.round ? width / 2 : 4
         opacity: control.enabled ? 1 : 0.6
+        Rectangle {
+            anchors.fill: parent; anchors.margins: 3
+            radius: control.round ? width / 2 : 2
+            color: "transparent"; border.color: control.down ? "#101112" : "#3a3b3c"
+        }
         Behavior on color { ColorAnimation { duration: 100 } }
     }
     contentItem: Canvas {

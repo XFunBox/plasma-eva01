@@ -6,7 +6,7 @@ El instalador muestra una simulación por defecto. Solo escribe con `--apply`, g
 
 ## NERV Deck: widget de Spotify y Spotifast
 
-Consola de audio nativa para el escritorio de **Plasma 6.6 o posterior**: carátula, canción y artista, controles, progreso y volumen. Se despliega para mostrar álbum, aleatorio y repetición. Detecta Spotify y Spotifast mediante MPRIS y permite elegir entre ellos si están abiertos a la vez. Sin un reproductor abierto muestra el estado de espera y un acceso a EVA-01 Audio.
+Widget analógico compacto con botones redondos, rueda de volumen y medidores ámbar en reposo, nativo para el escritorio de **Plasma 6.6 o posterior**: carátula, canción y artista, controles, progreso y volumen. Se despliega para mostrar álbum, aleatorio y repetición. Detecta Spotify y Spotifast mediante MPRIS y permite elegir entre ellos si están abiertos a la vez. Sin un reproductor abierto muestra el estado de espera y un acceso a EVA-01 Audio.
 
 Se instala por separado de la personalización del escritorio:
 
@@ -16,6 +16,8 @@ python3 instalar-widget.py --apply
 ```
 
 Después, en el escritorio: **Modo de edición → Añadir widgets → NERV Deck**. No añadirlo a la barra. El instalador prepara los archivos y conserva una copia del paquete anterior; no modifica distribuciones de paneles ni inicia reproducción.
+
+Para la ventana flotante, ejecutar `python3 instalar-ventana.py --apply` después de instalar el paquete. **Ctrl+Alt+M** la muestra con foco y la siguiente pulsación la oculta.
 
 [Uso, requisitos, pruebas y restauración de NERV Deck](docs/NERV-DECK.md).
 
