@@ -32,7 +32,7 @@ Este repositorio personaliza una instalación de KDE existente. No instala el si
 
 ## Instalar
 
-Clonar con una cuenta que tenga acceso al repositorio privado:
+Clonar el repositorio público y revisar primero la simulación:
 
 ```bash
 git clone https://github.com/XFunBox/plasma-eva01.git
