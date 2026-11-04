@@ -15,7 +15,8 @@ import tempfile
 from datetime import datetime, timezone
 
 
-COMPONENTS = ("apariencia", "atajos", "ventanas", "terminales")
+DEFAULT_COMPONENTS = ("apariencia", "atajos", "ventanas", "terminales")
+COMPONENTS = (*DEFAULT_COMPONENTS, "escritorio")
 ASSETS = Path(__file__).resolve().parent / "assets"
 SCRIPT = "kwin/scripts/eva01-ordenar-ventanas/"
 TARGETS = {
@@ -31,6 +32,14 @@ TARGETS = {
                    ("data", "konsole/EVA-01.colorscheme"),
                    ("data", "konsole/EVA-01.profile")],
 }
+TARGETS["escritorio"] = [
+    ("config", "autostart/eva01-desktop.desktop"),
+    ("config", "kwinrulesrc"),
+    ("data", "konsole/EVA-01-Escritorio.profile"),
+    ("data", "konsole/EVA-01-Escritorio.colorscheme"),
+    *[("data", "eva01-desktop/" + name) for name in
+      ("start.py", "stop.py", "finalize.js", "layout.py", "btop.conf", "zsh/.zshrc")],
+]
 KITTY_BEGIN = "# >>> plasma-eva01 >>>"
 KITTY_END = "# <<< plasma-eva01 <<<"
 
@@ -158,8 +167,24 @@ def make_plan(roots, components):
         settings.extend([("@profile", "General", "Name", "EVA-01"),
                          ("@profile", "General", "Parent", "FALLBACK/"),
                          ("@profile", "General", "Command", shell),
+                         ("@profile", "General", "Environment", "TERM=xterm-256color"),
                          ("@profile", "Appearance", "ColorScheme", "EVA-01")])
         setting("konsolerc", "Desktop Entry", "DefaultProfile", "EVA-01.profile")
+    if "escritorio" in components:
+        for name in ("start.py", "stop.py", "finalize.js", "layout.py", "btop.conf"):
+            copy("data", "eva01-desktop/" + name, "escritorio/" + name)
+        copy("data", "eva01-desktop/zsh/.zshrc", "terminales/prompt.zsh")
+        for suffix in ("profile", "colorscheme"):
+            name = "EVA-01-Escritorio." + suffix
+            copy("data", "konsole/" + name, "escritorio/" + name)
+        # Desktop Entry Exec tiene sus propias reglas; no usar comillas de shell.
+        script = str(roots["data"] / "eva01-desktop/start.py")
+        quoted = script.replace("\\", "\\\\").replace('"', '\\"').replace("`", "\\`").replace("$", "\\$")
+        quoted = quoted.replace("%", "%%").replace("\\", "\\\\")
+        copies[("config", "autostart/eva01-desktop.desktop")] = (
+            '[Desktop Entry]\nType=Application\nName=Paneles de escritorio EVA-01\n'
+            'Exec=/usr/bin/python3 "' + quoted + '"\nOnlyShowIn=KDE;\n'
+            'Terminal=false\nStartupNotify=false\n').encode()
     return copies, settings
 
 
@@ -277,7 +302,7 @@ def apply_plan(roots, copies, settings):
 def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--apply", action="store_true", help="Aplicar los cambios (por defecto: simulación)")
-    parser.add_argument("--components", nargs="+", choices=COMPONENTS, help="Componentes; por defecto todos")
+    parser.add_argument("--components", nargs="+", choices=COMPONENTS, help="Componentes; escritorio es opcional y no se incluye por defecto")
     parser.add_argument("--restore", type=Path, metavar="RUTA_COPIA", help="Restaurar una copia validada")
     parser.add_argument("--no-reload", action="store_true", help="No contactar con la sesión KDE")
     args = parser.parse_args(argv)
@@ -287,7 +312,7 @@ def main(argv=None):
     if args.restore:
         components, targets, previous = read_backup(args.restore.absolute(), roots)
     else:
-        components = list(dict.fromkeys(args.components or COMPONENTS))
+        components = list(dict.fromkeys(args.components or DEFAULT_COMPONENTS))
         targets = selected_targets(components)
         copies, settings = make_plan(roots, components)
     for root, name in targets:

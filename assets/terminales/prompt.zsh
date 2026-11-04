@@ -17,7 +17,7 @@ eva01_reloj() {
     local -i ancho
     cabeza="${USER}@${HOST%%.*} ${(%):-%~}"
     strftime -s fecha '[%a %d/%m %H:%M:%S]' "$EPOCHSECONDS"
-    ancho=$(( COLUMNS - ${#cabeza} - ${#fecha} ))
+    ancho=$(( COLUMNS - 1 - ${#cabeza} - ${#fecha} ))
     (( ancho < 1 )) && ancho=1
     linea="${(l:$ancho::─:)}"
     cabeza="${cabeza//\%/%%}"

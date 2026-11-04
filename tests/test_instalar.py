@@ -74,6 +74,32 @@ class InstallerTests(unittest.TestCase):
         path.write_text(json.dumps(manifest))
         (directory / "manifest.sha256").write_text(hashlib.sha256(path.read_bytes()).hexdigest())
 
+    def test_desktop_is_optional_and_restore_removes_only_installed_files(self):
+        source = INSTALLER.parent / "assets/escritorio"
+        shutil.copytree(source, self.assets / "escritorio")
+        before = self.snapshot()
+        self.run_installer("--components", "escritorio")
+        self.assertEqual(before, self.snapshot())
+        self.run_installer("--apply", "--components", "escritorio", "--no-reload")
+        backup = self.backup()
+        launch = self.config / "autostart/eva01-desktop.desktop"
+        self.assertIn('Exec=/usr/bin/python3 "', launch.read_text())
+        self.assertIn(str(self.data), launch.read_text())
+        profile = (self.data / "konsole/EVA-01-Escritorio.profile").read_text()
+        self.assertIn("Environment=TERM=xterm-256color", profile)
+        self.assertNotIn(";COLORTERM", profile)
+        self.assertFalse((self.config / "kdeglobals").exists())
+        self.assertFalse((self.data / "eva01-desktop/running.lock").exists())
+        self.run_installer("--apply", "--restore", str(backup), "--no-reload")
+        self.assertEqual(before, self.snapshot())
+
+    def test_terminal_profile_repairs_invalid_term_environment(self):
+        profile = self.data / "konsole/EVA-01.profile"
+        profile.parent.mkdir(parents=True)
+        profile.write_text("[General]\nEnvironment=TERM=xterm-256color;COLORTERM=truecolor\n")
+        self.run_installer("--apply", "--components", "terminales", "--no-reload")
+        self.assertIn("Environment=TERM=xterm-256color\n", profile.read_text())
+
     def test_dry_run_creates_nothing(self):
         before = set(self.home.rglob("*"))
         result = self.run_installer()

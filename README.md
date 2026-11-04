@@ -1,115 +1,153 @@
 # Plasma EVA-01
 
-Mi configuración reutilizable de KDE Plasma: negro, morado y verde vivo, con atajos para teclado de 60 %, organización de ventanas y terminales EVA-01.
+Un escritorio KDE Plasma oscuro, con verde vivo y morado: colores, terminales, atajos para teclado de 60 % y aplicaciones translúcidas integradas en el escritorio. Instalación por usuario, por componentes y con copia para volver atrás.
 
-El instalador muestra una simulación por defecto. Solo escribe con `--apply`, guarda una copia previa y permite restaurarla. No cambia la barra de tareas, el fondo, las pantallas ni el número de escritorios virtuales.
+![Escritorio EVA-01 con Dolphin a la izquierda y btop y terminal a la derecha](docs/images/escritorio.png)
 
-## NERV Deck: widget de Spotify y Spotifast
+> Capturas reales anonimizadas: se han tapado accesos personales, contenido de carpetas, usuario, equipo y datos de red. El fondo ilustrado muestra el entorno de origen; el repositorio no distribuye ni instala ese fondo.
 
-Widget analógico compacto con botones redondos, rueda de volumen y medidores ámbar en reposo, nativo para el escritorio de **Plasma 6.6 o posterior**: carátula, canción y artista, controles, progreso y volumen. Se despliega para mostrar álbum, aleatorio y repetición. Detecta Spotify y Spotifast mediante MPRIS y permite elegir entre ellos si están abiertos a la vez. Sin un reproductor abierto muestra el estado de espera y un acceso a EVA-01 Audio.
+[Instalación](#instalación) · [Paneles de escritorio](#paneles-de-escritorio) · [Atajos](#atajos) · [Restaurar](#restaurar) · [NERV Deck](docs/NERV-DECK.md)
 
-Se instala por separado de la personalización del escritorio:
+## Qué incluye
 
-```bash
-python3 instalar-widget.py
-python3 instalar-widget.py --apply
-```
+| Componente | Resultado |
+| --- | --- |
+| `apariencia` | Esquema EVA01Dark actualizado al estado de noviembre de 2026, iconos Breeze Dark y estilo de Plasma Breeze. |
+| `terminales` | Paletas para Kitty, Konsole y Ptyxis; Zsh con ruta y reloj que se actualiza cada segundo. |
+| `atajos` | Acciones de ventana y cambio de escritorio con letras y números. |
+| `ventanas` | Script de KWin para ordenar ventanas y recuperar la distribución anterior. |
+| `escritorio` · opcional | Dolphin grande a la izquierda; btop arriba y terminal debajo a la derecha. Inicio automático en KDE. |
+| NERV Deck · separado | Widget multimedia y ventana flotante para Spotify/Spotifast mediante MPRIS. |
 
-Después, en el escritorio: **Modo de edición → Añadir widgets → NERV Deck**. No añadirlo a la barra. El instalador prepara los archivos y conserva una copia del paquete anterior; no modifica distribuciones de paneles ni inicia reproducción.
-
-Para la ventana flotante, ejecutar `python3 instalar-ventana.py --apply` después de instalar el paquete. **Ctrl+Alt+M** la muestra con foco y la siguiente pulsación la oculta.
-
-[Uso, requisitos, pruebas y restauración de NERV Deck](docs/NERV-DECK.md).
+El instalador principal conserva la barra de tareas, el fondo, la configuración de pantallas y el número de escritorios. Los paneles de escritorio y NERV Deck se instalan de forma explícita.
 
 ## Requisitos
 
-- Linux con **KDE Plasma 6 ya instalado**. Las fuentes proceden de un equipo Ubuntu con Plasma 6.6.6; otras distribuciones/versiones necesitan comprobarse.
-- Python 3.10 o posterior y `kwriteconfig6` de KDE Frameworks 6.
-- `qdbus6` para pedir a KWin que recargue la configuración; con `--no-reload` se preparan los archivos sin contactar con la sesión.
-- Zsh para el componente de terminales. Kitty, Konsole y Ptyxis son aplicaciones opcionales que se instalan por separado.
+Entorno de origen: **Ubuntu, KDE Plasma 6.6.6 y Wayland con XWayland**. Otras versiones no se han comprobado.
 
-Este repositorio personaliza una instalación de KDE existente. No instala el sistema operativo ni paquetes con `sudo`.
+- Python **3.10+**, `kwriteconfig6` y `qdbus6` para el instalador principal.
+- Zsh para `terminales`; instalar las aplicaciones cuyas paletas quieras utilizar.
+- Para `escritorio`: Konsole, Dolphin, btop, `kscreen-doctor`, XWayland y el módulo Python `Xlib` (`python3-xlib` en Ubuntu).
+- Para NERV Deck: requisitos adicionales en [su guía](docs/NERV-DECK.md).
 
-## Instalar
+Usa el Python del sistema (`/usr/bin/python3`) para los paneles. No hace falta instalar dependencias con pip ni ejecutar el instalador con sudo.
 
-Clonar el repositorio público y revisar primero la simulación:
+## Instalación
 
 ```bash
 git clone https://github.com/XFunBox/plasma-eva01.git
 cd plasma-eva01
+
+# Ver el plan: no escribe archivos.
 python3 instalar.py
-```
 
-El último comando solo muestra los cambios previstos. Para aplicarlos, ejecutar como usuario normal, desde la sesión de KDE:
-
-```bash
+# Aplicar apariencia, atajos, ventanas y terminales.
 python3 instalar.py --apply
 ```
 
-Se pueden seleccionar componentes:
+También puedes escoger solo lo que necesites:
 
 ```bash
-python3 instalar.py --components apariencia ventanas
-python3 instalar.py --apply --components apariencia ventanas
+python3 instalar.py --components apariencia terminales
+python3 instalar.py --components apariencia terminales --apply
 ```
 
-Para preparar los archivos sin recarga por D-Bus:
+Cada aplicación imprime la ruta de su copia de seguridad. Reabre los terminales y cierra y abre la sesión para cargar todos los cambios de apariencia y atajos. `--no-reload` permite preparar o restaurar los archivos sin contactar con la sesión KDE.
+
+**Cambios en terminales:** Kitty recibe un bloque identificado al final de su configuración; Konsole usa `EVA-01.profile` como perfil predeterminado. El prompt tiene un directorio Zsh propio: no sustituye tu `~/.zshrc`. La paleta de Ptyxis queda disponible para elegirla desde la aplicación, sin fijar un UUID de perfil.
+
+## Paneles de escritorio
+
+![btop translúcido; los datos de red están ocultos](docs/images/monitor.png)
+
+Son aplicaciones reales e interactivas colocadas en la capa del escritorio mediante XWayland y KWin. Se mantienen visibles al mostrar el escritorio y permanecen detrás de las ventanas normales, en todos los escritorios virtuales, y no aparecen en Alt+Tab ni en la barra de tareas. Se reserva una franja superior para los iconos del escritorio. Las reglas exclusivas de KWin fuerzan su posición, tamaño y capa para evitar que queden detrás de Plasma o se redimensionen accidentalmente. Al arrancar se añaden esas tres reglas a `kwinrulesrc`, conservando las demás; la copia inicial de ese archivo se guarda en `${XDG_STATE_HOME:-$HOME/.local/state}/eva01-desktop/kwinrulesrc.before`.
 
 ```bash
-python3 instalar.py --apply --no-reload
+# Simular y preparar los archivos, sin lanzar aplicaciones.
+python3 instalar.py --components escritorio --no-reload
+python3 instalar.py --components escritorio --apply --no-reload
+
+# Abrirlos en la sesión actual, o esperar al siguiente inicio de sesión.
+/usr/bin/python3 "${XDG_DATA_HOME:-$HOME/.local/share}/eva01-desktop/start.py"
 ```
 
-Después de aplicar, cerrar sesión e iniciarla de nuevo carga de forma fiable la apariencia y los atajos. Abrir una terminal nueva carga su perfil y prompt. La recarga de KWin no sustituye el reinicio de sesión de todas las aplicaciones.
+La distribución usa como referencia **2560 × 1440** y se adapta al tamaño y escala de la salida. Por defecto busca **`eDP-1`**; si está desactivada no abre los paneles. Para otro nombre, consulta `kscreen-doctor -j` y ejecuta:
 
-## Componentes
+```bash
+/usr/bin/python3 "${XDG_DATA_HOME:-$HOME/.local/share}/eva01-desktop/start.py" --output eDP-2
+```
 
-| Componente | Qué aplica |
+Para hacerlo permanente, añade ese argumento a `Exec` en `${XDG_CONFIG_HOME:-$HOME/.config}/autostart/eva01-desktop.desktop`. Las posiciones están en `assets/escritorio/layout.py` (`RECTS`), compartidas por el lanzador y las reglas. La distribución está probada en el portátil de origen; otras resoluciones pueden necesitar ajustes.
+
+![Terminal translúcida con prompt Zsh; identificación personal oculta](docs/images/terminal.png)
+
+El perfil exclusivo `EVA-01-Escritorio` usa una opacidad del **72 %** y Dolphin del **88 %**. El reloj deja una columna libre para que su actualización no añada líneas. `TERM` se declara por separado, sin concatenar variables en su valor.
+
+Para cerrar los tres paneles, guarda antes cualquier trabajo en su terminal:
+
+```bash
+/usr/bin/python3 "${XDG_DATA_HOME:-$HOME/.local/share}/eva01-desktop/stop.py"
+```
+
+Este comando envía SIGTERM únicamente a las aplicaciones marcadas `eva01-desktop-*`. No cierra otras ventanas de Konsole o Dolphin. Para retirarlos permanentemente, ciérralos y restaura la copia creada al instalar `escritorio`; así también se recupera o elimina su entrada de inicio automático. La restauración también recupera `kwinrulesrc` completo desde la copia de instalación: revisa si has añadido otras reglas posteriormente. Los registros, el historial y el archivo de bloqueo que se generan durante el uso no forman parte de esa copia de instalación.
+
+## Atajos
+
+| Teclas | Acción |
 | --- | --- |
-| `apariencia` | Esquema EVA01Dark, colores seleccionados de KDE e iconos Breeze Dark. |
-| `atajos` | Asignaciones concretas de KWin para minimizar, maximizar, mosaico izquierdo, vista general y escritorios 1–2. |
-| `ventanas` | Complemento propio de KWin, acceso en aplicaciones y acciones para ordenar y restaurar ventanas. |
-| `terminales` | Paleta y prompt Zsh para Kitty y Konsole; paleta preparada para Ptyxis. |
+| Meta + M | Minimizar ventana |
+| Meta + X | Maximizar/restaurar |
+| Meta + H | Mitad izquierda |
+| Meta + W | Vista general |
+| Ctrl + Alt + 1 / 2 | Ir al escritorio virtual 1 / 2, si existe |
+| Meta + O | Ordenar ventanas |
+| Meta + Mayús + O | Restaurar su distribución anterior |
 
-### Atajos y ventanas
+Meta corresponde normalmente a la tecla Windows. Meta + L conserva su función de bloqueo. El componente de ventanas instala un script propio de KWin y un acceso que permite invocarlo mediante el atajo.
 
-| Atajo | Acción |
-| --- | --- |
-| Windows + M | Minimizar |
-| Windows + X | Maximizar o restaurar |
-| Windows + H | Mitad izquierda |
-| Windows + W | Vista general |
-| Ctrl + Alt + 1 / 2 | Escritorio 1 / 2, si existen |
-| Windows + O | Ordenar ventanas de cada monitor |
-| Windows + Shift + O | Restaurar la distribución anterior |
+## NERV Deck
 
-No se reasigna Windows + L, que se conserva para bloquear la sesión. Alt + Espacio es el acceso habitual a KRunner y no se modifica. No se crean escritorios adicionales ni se activan los atajos históricos de escritorios 3–4.
+![NERV Deck desplegado, renderizado con datos ficticios de demostración](docs/images/nerv-deck.png)
 
-El organizador conserva cada ventana en su monitor y respeta el espacio que dejan los paneles. Excluye ventanas minimizadas, a pantalla completa, diálogos y Coucou. La distribución anterior se guarda en memoria: se pierde al reiniciar KWin o cerrar sesión. Algunas aplicaciones pueden imponer tamaños mínimos.
+Vista previa de la interfaz real con datos ficticios, sin información de la sesión.
 
-### Terminales
-
-El prompt Zsh dedicado muestra usuario, máquina, ruta y reloj con segundos. No sustituye el `.zshrc` general ni modifica conexiones SSH. Los perfiles usan rutas calculadas durante la instalación, sin un nombre de usuario fijo.
-
-El componente prepara una paleta `EVA-01` para Ptyxis. **No modifica automáticamente su perfil activo**: abrir Preferencias y elegir la paleta EVA-01 para el perfil deseado. Kitty y Konsole reciben la configuración y el perfil del instalador. Esta decisión evita trasladar el UUID de un perfil personal a otros equipos.
-
-## Copias y restauración
-
-Cada aplicación imprime la ruta de su copia privada, bajo `${XDG_STATE_HOME:-$HOME/.local/state}/plasma-eva01/backups/`. Las copias se quedan en el equipo y no forman parte del repositorio.
-
-Usar la ruta exacta impresa por el instalador:
+Controles multimedia con carátula, transporte, progreso y volumen; vista compacta o desplegada y selección de reproductor. La ventana flotante se alterna con **Ctrl + Alt + M**.
 
 ```bash
-python3 instalar.py --restore /ruta/a/la/copia
-python3 instalar.py --restore /ruta/a/la/copia --apply --no-reload
+python3 instalar-widget.py             # Simular
+python3 instalar-widget.py --apply     # Instalar el paquete
+python3 instalar-ventana.py --apply    # Preparar acceso y atajo
 ```
 
-Cerrar las aplicaciones afectadas antes de restaurar y volver a iniciar sesión después. La restauración recupera los archivos completos guardados y elimina los archivos instalados que antes no existían. En archivos compartidos como `kdeglobals` o `kglobalshortcutsrc`, también revierte cambios posteriores hechos en ese mismo archivo: comprobar la fecha de la copia antes de usarla.
+Después añade **NERV Deck** desde «Añadir widgets» de Plasma. Consulta [la guía completa](docs/NERV-DECK.md) para compatibilidad, funcionamiento y desinstalación. Estos instaladores tienen sus propias copias y comandos de restauración.
 
-No editar el manifiesto de las copias ni moverlas entre usuarios o equipos. Si una aplicación falla durante la instalación, conservar la copia indicada para recuperar el estado anterior.
+## Restaurar
 
-## Pruebas
+El instalador principal guarda las copias en `${XDG_STATE_HOME:-$HOME/.local/state}/plasma-eva01/backups/`. Usa la ruta exacta que imprimió la instalación:
 
-Desde la raíz del repositorio:
+```bash
+# Revisar qué se recuperaría.
+python3 instalar.py --restore /ruta/de/la/copia
+
+# Recuperar ese estado.
+python3 instalar.py --restore /ruta/de/la/copia --apply
+```
+
+La copia contiene solo los archivos de los componentes seleccionados, sus permisos y un manifiesto con sumas SHA-256. Si un archivo no existía, restaurar elimina el que se instaló. Antes de restaurar se crea otra copia del estado sustituido. Los enlaces simbólicos y las copias con rutas o contenido alterados se rechazan.
+
+No restaures una copia antigua sin revisar el plan: devuelve esos archivos completos al estado guardado y puede sustituir cambios posteriores hechos a mano. Para los paneles, ejecuta primero `stop.py` y utiliza `--no-reload`.
+
+## Si algo falla
+
+| Síntoma | Qué comprobar |
+| --- | --- |
+| Los paneles no aparecen | Salida habilitada y nombre en `kscreen-doctor -j`; dependencias y variable `DISPLAY` de XWayland. |
+| Solo aparece parte de los paneles | Archivos `terminal.log`, `btop.log` y `archivos.log` bajo el directorio instalado `eva01-desktop`. Cierra los paneles dedicados y vuelve a arrancarlos. |
+| La terminal añade líneas al actualizar el reloj | Reinstala el perfil y prompt actuales; `TERM` debe valer `xterm-256color`, sin variables pegadas con punto y coma. Reabre la terminal. |
+| Kitty no carga los colores | Comprueba que no haya un bloque EVA-01 incompleto o duplicado; el instalador informa del problema antes de escribir. |
+| No hay sesión KDE disponible | Usa `--no-reload` para preparar archivos; inicia los paneles desde la sesión gráfica. |
+
+## Desarrollo y comprobación
 
 ```bash
 python3 -m unittest discover -s tests -v
@@ -117,15 +155,20 @@ node tests/test_ventanas.cjs
 zsh -n assets/terminales/prompt.zsh
 ```
 
-Las pruebas Python usan directorios HOME/XDG temporales y `kwriteconfig6` real, sin cambiar el escritorio. La prueba JavaScript comprueba las decisiones del script con un adaptador de la API de KWin; no reemplaza una prueba visual con ventanas reales. Node.js y Zsh solo se necesitan para las comprobaciones correspondientes.
+Las pruebas del instalador usan directorios XDG temporales, incluyendo rutas con espacios, y comprueban simulación, aplicación repetida, restauración, enlaces, copias corruptas y recuperación tras fallos. Las pruebas multimedia usan un bus privado y reproductores de prueba; no requieren credenciales de Spotify. Para ejecutarlas hacen falta las dependencias de desarrollo descritas en [NERV Deck](docs/NERV-DECK.md#pruebas-y-vistas-previas).
 
-## Procedencia y alcance
+```text
+assets/             Colores, terminales, script de KWin y paneles
+widget/             Paquete de NERV Deck
+instalar.py         Instalación por componentes y restauración
+instalar-widget.py  Instalación de NERV Deck
+instalar-ventana.py  Acceso y atajo de su ventana flotante
+docs/               Guías e imágenes anonimizadas
+tests/              Comprobaciones aisladas
+```
 
-- El complemento `eva01-ordenar-ventanas` y el esquema EVA01Dark se compararon con los archivos instalados antes de incorporarlos.
-- Las paletas de Konsole/Ptyxis y el prompt se recuperaron de los recursos locales; la configuración de Kitty se limpió para conservar el último valor efectivo de cada ajuste.
-- El instalador antiguo de apariencia llamaba a otro script que cambiaba el panel. Esa dependencia no se utiliza aquí.
-- No se incluyen volcados completos de `.config`, UUID de perfiles, historiales de terminal, credenciales, copias antiguas, paquetes de terceros ni archivos de las notas de Obsidian.
+## Privacidad y licencias
 
-Referencias de KDE: [empaquetado e instalación de scripts KWin](https://develop.kde.org/docs/plasma/kwin/) y [API de scripting](https://develop.kde.org/docs/plasma/kwin/api/).
+El repositorio contiene recursos seleccionados y rutas portables. No incluye volcados de `~/.config`, credenciales, claves SSH, historiales, UUID de perfiles, registros de uso ni copias personales. Las imágenes publicadas son versiones anonimizadas; sus originales no se incluyen.
 
-Código propio bajo MIT. El esquema `assets/EVA01Dark.colors` conserva sus autores y la licencia LGPL-2.0-or-later de la base KDE; véase `LICENSES.md`.
+Código propio bajo **MIT**. El esquema KDE adaptado conserva su atribución y licencia **LGPL-2.0-or-later**. Consulta [LICENSE](LICENSE) y [LICENSES.md](LICENSES.md).
