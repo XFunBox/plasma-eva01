@@ -1,0 +1,14 @@
+EVA dos islas · estados visibles (2026-11-05)
+
+Adaptación de Breeze, KDE Visual Design Group y colaboradores de KDE.
+SVG de origen: plasma-desktoptheme, widgets/panel-background.svgz y
+widgets/tasks.svgz, instalados en /usr/share/plasma/desktoptheme/default.
+Fuente: https://invent.kde.org/plasma/libplasma (tema Breeze).
+
+Licencia: LGPL-2.0-or-later; véanse COPYING.LIB y COPYRIGHT.upstream.
+Los SVG editables se distribuyen como fuente de la adaptación.
+
+Cambios de Sendoa: fondo grafito, bordes discretos, sin cajas de tareas,
+marca blanca para aplicaciones abiertas y verde más ancha para la activa.
+Los demás recursos se heredan de Breeze. No incluye ni sustituye iconos.
+El mismo tratamiento se incluye en las variantes opaca y translúcida.

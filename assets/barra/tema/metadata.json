@@ -1,0 +1,15 @@
+{
+  "KPlugin": {
+    "Id": "eva-islas-estados",
+    "Name": "EVA dos islas · estados visibles",
+    "Description": "Dos islas grafito: aplicaciones abiertas en blanco y activa en verde",
+    "Version": "1.0",
+    "License": "LGPL-2.0-or-later",
+    "Authors": [
+      {
+        "Name": "KDE Visual Design Group; adaptación local Sendoa"
+      }
+    ]
+  },
+  "X-Plasma-API": "5.0"
+}

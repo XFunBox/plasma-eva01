@@ -6,7 +6,7 @@ Un escritorio KDE Plasma oscuro, con verde vivo y morado: colores, terminales, a
 
 > Capturas reales anonimizadas: se han tapado accesos personales, contenido de carpetas, usuario, equipo y datos de red. El fondo ilustrado muestra el entorno de origen; el repositorio no distribuye ni instala ese fondo.
 
-[Instalación](#instalación) · [Paneles de escritorio](#paneles-de-escritorio) · [Atajos](#atajos) · [Restaurar](#restaurar) · [NERV Deck](docs/NERV-DECK.md)
+[Instalación](#instalación) · [Barra de tareas](docs/BARRA.md) · [Paneles de escritorio](#paneles-de-escritorio) · [Atajos](#atajos) · [Restaurar](#restaurar) · [NERV Deck](docs/NERV-DECK.md)
 
 ## Qué incluye
 
@@ -17,9 +17,10 @@ Un escritorio KDE Plasma oscuro, con verde vivo y morado: colores, terminales, a
 | `atajos` | Acciones de ventana y cambio de escritorio con letras y números. |
 | `ventanas` | Script de KWin para ordenar ventanas y recuperar la distribución anterior. |
 | `escritorio` · opcional | Dolphin grande a la izquierda; btop arriba y terminal debajo a la derecha. Inicio automático en KDE. |
+| Barra «dos islas» · separada | Aplicaciones centradas y utilidades a la derecha; marcas de estado y favoritos sincronizados entre paneles seleccionados. |
 | NERV Deck · separado | Widget multimedia y ventana flotante para Spotify/Spotifast mediante MPRIS. |
 
-El instalador principal conserva la barra de tareas, el fondo, la configuración de pantallas y el número de escritorios. Los paneles de escritorio y NERV Deck se instalan de forma explícita.
+El instalador principal conserva la barra de tareas, el fondo, la configuración de pantallas y el número de escritorios. Los paneles de escritorio, la barra «dos islas» y NERV Deck se instalan de forma explícita.
 
 ## Requisitos
 
@@ -55,6 +56,14 @@ python3 instalar.py --components apariencia terminales --apply
 Cada aplicación imprime la ruta de su copia de seguridad. Reabre los terminales y cierra y abre la sesión para cargar todos los cambios de apariencia y atajos. `--no-reload` permite preparar o restaurar los archivos sin contactar con la sesión KDE.
 
 **Cambios en terminales:** Kitty recibe un bloque identificado al final de su configuración; Konsole usa `EVA-01.profile` como perfil predeterminado. El prompt tiene un directorio Zsh propio: no sustituye tu `~/.zshrc`. La paleta de Ptyxis queda disponible para elegirla desde la aplicación, sin fijar un UUID de perfil.
+
+## Barra de tareas
+
+![Barra dos islas en dos pantallas, con los iconos existentes](docs/images/barra-dos-islas.png)
+
+La opción **dos islas** separa las aplicaciones centradas de las utilidades de la derecha. Mantiene los iconos y favoritos existentes. Una marca blanca indica una aplicación abierta; una marca verde más ancha identifica la activa. Los accesos anclados sin abrir quedan sin marca.
+
+El instalador independiente `instalar-barra.py` permite elegir los paneles y guarda una copia previa. La sincronización propaga favoritos y su orden; los ajustes de tamaño, widgets y bandeja siguen siendo independientes. Consulta [instalación, límites y restauración de la barra](docs/BARRA.md).
 
 ## Paneles de escritorio
 
@@ -161,6 +170,7 @@ Las pruebas del instalador usan directorios XDG temporales, incluyendo rutas con
 assets/             Colores, terminales, script de KWin y paneles
 widget/             Paquete de NERV Deck
 instalar.py         Instalación por componentes y restauración
+instalar-barra.py   Barra dos islas, tema e instalación de sincronización
 instalar-widget.py  Instalación de NERV Deck
 instalar-ventana.py  Acceso y atajo de su ventana flotante
 docs/               Guías e imágenes anonimizadas
