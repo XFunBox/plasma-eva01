@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="3840" height="2160" viewBox="0 0 3840 2160">
+<defs>
+ <radialGradient id="wash"><stop stop-color="#292035"/><stop offset="1" stop-color="#101117"/></radialGradient>
+ <linearGradient id="edge"><stop stop-color="#99ff40" stop-opacity="0"/><stop offset=".5" stop-color="#99ff40" stop-opacity=".7"/><stop offset="1" stop-color="#99ff40" stop-opacity="0"/></linearGradient>
+ <pattern id="grid" width="120" height="120" patternUnits="userSpaceOnUse"><path d="M120 0H0V120" fill="none" stroke="#a46ce6" stroke-opacity=".045" stroke-width="1"/></pattern>
+</defs>
+<rect width="3840" height="2160" fill="url(#wash)"/>
+<rect width="3840" height="2160" fill="url(#grid)"/>
+<g fill="none" stroke="#a46ce6" stroke-width="2">
+ <path opacity=".15" d="M0 1700H560L1010 2150H2250L3750 650V0"/>
+ <path opacity=".12" d="M0 1780H530L910 2160M2600 2160L3840 920"/>
+ <path opacity=".18" d="M2900 0V390L3400 890H3840"/>
+</g>
+<path d="M0 1890H3840" stroke="url(#edge)" stroke-width="2"/>
+<g fill="#99ff40" opacity=".8"><path d="M300 1860h8v60h-8zm20 0h8v60h-8zm20 0h8v60h-8z"/><path d="M3500 240h40v4h-40zm36 0h4v40h-4z"/></g>
+<g fill="#a46ce6" opacity=".5"><path d="M300 240h40v4h-40zm0 0h4v40h-4z"/><path d="M3500 1916h40v4h-40zm36-36h4v40h-4z"/></g>
+</svg>

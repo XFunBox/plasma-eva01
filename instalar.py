@@ -16,7 +16,7 @@ from datetime import datetime, timezone
 
 
 DEFAULT_COMPONENTS = ("apariencia", "atajos", "ventanas", "terminales")
-COMPONENTS = (*DEFAULT_COMPONENTS, "escritorio")
+COMPONENTS = (*DEFAULT_COMPONENTS, "escritorio", "acabado")
 ASSETS = Path(__file__).resolve().parent / "assets"
 SCRIPT = "kwin/scripts/eva01-ordenar-ventanas/"
 TARGETS = {
@@ -40,6 +40,21 @@ TARGETS["escritorio"] = [
     *[("data", "eva01-desktop/" + name) for name in
       ("start.py", "stop.py", "finalize.js", "layout.py", "btop.conf", "zsh/.zshrc")],
 ]
+# Recurso independiente: no reinstala ni modifica barra o widgets.
+FINISH_ICONS = ("folder", "folder-open", "folder-documents", "folder-download",
+                "folder-pictures", "folder-music", "folder-videos", "folder-desktop",
+                "folder-templates", "folder-publicshare", "user-home")
+FINISH_FILES = {
+    "color-schemes/EVA01Finish.colors": "EVA01Finish.colors",
+    "wallpapers/eva01-lock.svg": "eva01-lock.svg",
+    **{f"icons/EVA01-Breeze/{name}": f"icons/{name}" for name in
+       ("index.theme", "NOTICE", "COPYRIGHT.upstream", "COPYING", "COPYING.LESSER")},
+    **{f"icons/EVA01-Breeze/places/scalable/{name}.svg":
+       f"icons/places/scalable/{name}.svg" for name in FINISH_ICONS},
+}
+TARGETS["acabado"] = [*(('config', name) for name in
+                        ("kdeglobals", "kwinrc", "breezerc", "kscreenlockerrc")),
+                       *(("data", name) for name in FINISH_FILES)]
 KITTY_BEGIN = "# >>> plasma-eva01 >>>"
 KITTY_END = "# <<< plasma-eva01 <<<"
 
@@ -93,6 +108,17 @@ def reload_session(components, no_reload):
     run(["qdbus6", "org.kde.KWin", "/KWin", "org.kde.KWin.reconfigure"])
     if "ventanas" in components:
         run(["qdbus6", "org.kde.KWin", "/Scripting", "org.kde.kwin.Scripting.start"])
+    if "acabado" in components:
+        # Qt/KDE recargan la paleta y los iconos sin reiniciar plasmashell.
+        for change in (0, 4):
+            run(["dbus-send", "--session", "--type=signal", "/KGlobalSettings",
+                 "org.kde.KGlobalSettings.notifyChange", f"int32:{change}", "int32:0"])
+        run(["dbus-send", "--session", "--type=signal", "/KIconLoader",
+             "org.kde.KIconLoader.iconChanged", "int32:0"])
+        for path in ("/BreezeStyle", "/BreezeDecoration"):
+            run(["dbus-send", "--session", "--type=signal", path,
+                 "org.kde.Breeze.Style.reparseConfiguration"])
+
 
 
 def asset(name):
@@ -124,6 +150,34 @@ def make_plan(roots, components):
         setting("kdeglobals", "General", "ColorScheme", "EVA01Dark")
         setting("kdeglobals", "Icons", "Theme", "breeze-dark")
         setting("plasmarc", "Theme", "name", "default")
+    if "acabado" in components:
+        for target, source in FINISH_FILES.items():
+            copy("data", target, "acabado/" + source)
+        colors = configparser.ConfigParser(interpolation=None)
+        colors.optionxform = str
+        colors.read_string(asset("acabado/EVA01Finish.colors").decode())
+        for group in colors.sections():
+            if group.startswith(("Colors:", "ColorEffects:")) or group == "WM":
+                for key, value in colors[group].items():
+                    setting("kdeglobals", group, key, value)
+        for file, group, values in (
+            ("kdeglobals", "General", {"ColorScheme": "EVA01Finish", "AccentColor": "153,255,64"}),
+            ("kdeglobals", "Icons", {"Theme": "EVA01-Breeze"}),
+            ("kdeglobals", "KDE", {"AnimationDurationFactor": "0.65"}),
+            ("kwinrc", "org.kde.kdecoration2", {"library": "org.kde.breeze",
+                                               "BorderSize": "Tiny", "BorderSizeAuto": "false"}),
+            ("breezerc", "Common", {"OutlineEnabled": "true", "ShadowSize": "ShadowMedium",
+                                    "ShadowStrength": "160", "ShadowColor": "12,8,18"}),
+            ("breezerc", "Style", {"MenuOpacity": "94"}),
+            ("kwinrc", "Plugins", {"blurEnabled": "true"}),
+            ("kwinrc", "Effect-blur", {"BlurStrength": "10", "NoiseStrength": "2", "Saturation": "100"}),
+            ("kscreenlockerrc", "Greeter", {"WallpaperPlugin": "org.kde.image"}),
+            ("kscreenlockerrc", "Greeter][Wallpaper][org.kde.image][General",
+             {"Image": (roots["data"] / "wallpapers/eva01-lock.svg").as_uri(), "FillMode": "2"}),
+            ("kscreenlockerrc", "Greeter][LnF][General", {"alwaysShowClock": "true", "hideClockWhenIdle": "false"}),
+        ):
+            for key, value in values.items():
+                setting(file, group, key, value)
     if "atajos" in components:
         shortcuts = json.loads(asset("atajos.json"))
         if not isinstance(shortcuts, list):
@@ -302,7 +356,7 @@ def apply_plan(roots, copies, settings):
 def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--apply", action="store_true", help="Aplicar los cambios (por defecto: simulación)")
-    parser.add_argument("--components", nargs="+", choices=COMPONENTS, help="Componentes; escritorio es opcional y no se incluye por defecto")
+    parser.add_argument("--components", nargs="+", choices=COMPONENTS, help="Componentes; escritorio y acabado son opcionales")
     parser.add_argument("--restore", type=Path, metavar="RUTA_COPIA", help="Restaurar una copia validada")
     parser.add_argument("--no-reload", action="store_true", help="No contactar con la sesión KDE")
     args = parser.parse_args(argv)

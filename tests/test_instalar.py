@@ -93,6 +93,35 @@ class InstallerTests(unittest.TestCase):
         self.run_installer("--apply", "--restore", str(backup), "--no-reload")
         self.assertEqual(before, self.snapshot())
 
+    def test_finish_preserves_layout_widgets_security_and_restores_exactly(self):
+        shutil.copytree(INSTALLER.parent / "assets/acabado", self.assets / "acabado")
+        self.write("plasma-org.kde.plasma.desktop-appletsrc", b"paneles y widgets intactos\n")
+        self.write("plasmarc", b"[Theme]\nname=eva-islas-estados\n")
+        self.write("kwinrc", b"[Desktops]\nNumber=2\n[Wayland]\nScale=1.4\n")
+        self.write("kscreenlockerrc", b"[Daemon]\nAutolock=false\nLockOnResume=false\n")
+        self.write("kdeglobals", b"[General]\nOther=conservar\n")
+        initial = self.snapshot()
+        self.run_installer("--components", "acabado", "--no-reload")
+        self.assertEqual(initial, self.snapshot())
+        self.run_installer("--apply", "--components", "acabado", "--no-reload")
+        backup = self.backup()
+        self.assertEqual((self.config / "plasma-org.kde.plasma.desktop-appletsrc").read_bytes(),
+                         b"paneles y widgets intactos\n")
+        self.assertEqual((self.config / "plasmarc").read_bytes(), b"[Theme]\nname=eva-islas-estados\n")
+        self.assertIn("Number=2", (self.config / "kwinrc").read_text())
+        self.assertIn("Scale=1.4", (self.config / "kwinrc").read_text())
+        lock = (self.config / "kscreenlockerrc").read_text()
+        self.assertIn("Autolock=false", lock)
+        self.assertIn("LockOnResume=false", lock)
+        self.assertIn("eva01-lock.svg", lock)
+        self.assertIn("Theme=EVA01-Breeze", (self.config / "kdeglobals").read_text())
+        self.assertIn("Other=conservar", (self.config / "kdeglobals").read_text())
+        installed = self.snapshot()
+        self.run_installer("--apply", "--components", "acabado", "--no-reload")
+        self.assertEqual(installed, self.snapshot())
+        self.run_installer("--restore", str(backup), "--apply", "--no-reload")
+        self.assertEqual(initial, self.snapshot())
+
     def test_terminal_profile_repairs_invalid_term_environment(self):
         profile = self.data / "konsole/EVA-01.profile"
         profile.parent.mkdir(parents=True)

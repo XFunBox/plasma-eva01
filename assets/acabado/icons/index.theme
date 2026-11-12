@@ -1,0 +1,12 @@
+[Icon Theme]
+Name=EVA-01 Breeze
+Comment=Carpetas moradas y aplicaciones Breeze oscuro
+Inherits=breeze-dark,breeze,hicolor
+Directories=places/scalable
+
+[places/scalable]
+Size=64
+Type=Scalable
+MinSize=16
+MaxSize=512
+Context=Places

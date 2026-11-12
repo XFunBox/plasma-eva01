@@ -22,6 +22,19 @@ Un escritorio KDE Plasma oscuro, con verde vivo y morado: colores, terminales, a
 
 El instalador principal conserva la barra de tareas, el fondo, la configuración de pantallas y el número de escritorios. Los paneles de escritorio, la barra «dos islas» y NERV Deck se instalan de forma explícita.
 
+## Acabado visual EVA-01
+
+El componente opcional `acabado` combina colores oscuros con selección verde, títulos activos verdes e inactivos morados, contorno y sombra Breeze, menús al 94 % de opacidad, desenfoque moderado sin sobresaturación, carpetas moradas y fondo geométrico de bloqueo con reloj siempre visible. Mantiene los efectos de animación elegidos y ajusta su velocidad a 0,65.
+
+```bash
+python3 instalar.py --components acabado              # Revisar destinos
+python3 instalar.py --components acabado --apply      # Instalar y recargar
+```
+
+No aplica `apariencia`, `escritorio` ni los instaladores de barra/NERV Deck: conserva el estilo Plasma actual, disposición y configuración de widgets, paneles, pantallas y fondo de escritorio. Los elementos que siguen la paleta global reflejarán los colores nuevos. Mantiene el bloqueo automático y las opciones de energía. No cambia atajos, terminales ni perfiles de aplicaciones.
+
+[Detalles, compatibilidad, pruebas y restauración](docs/ACABADO.md).
+
 ## Requisitos
 
 Entorno de origen: **Ubuntu, KDE Plasma 6.6.6 y Wayland con XWayland**. Otras versiones no se han comprobado.

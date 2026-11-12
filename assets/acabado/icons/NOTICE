@@ -1,0 +1,6 @@
+EVA01-Breeze — adaptación de Breeze Icons (KDE).
+Origen: https://invent.kde.org/frameworks/breeze-icons
+Copyright 2014 Uri Herrera, 2020 Noah Davis, 2020 Niccolò Venerandi y colaboradores.
+Licencia: LGPL-3.0-or-later, con la excepción de KDE e.V. recogida en COPYRIGHT.upstream.
+Cambios: color fijo morado #a46ce6 en las carpetas; glifos Breeze conservados.
+Los SVG editables son la fuente. El resto de iconos se hereda de Breeze Dark.
