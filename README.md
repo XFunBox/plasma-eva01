@@ -35,6 +35,18 @@ No aplica `apariencia`, `escritorio` ni los instaladores de barra/NERV Deck: con
 
 [Detalles, compatibilidad, pruebas y restauración](docs/ACABADO.md).
 
+## Transparencia tipo Savia
+
+El componente opcional `cristal` añade superficies al 86 % de opacidad y menús al 90 %, con texto sólido, acentos verdes y desenfoque. Utiliza Kvantum para las aplicaciones Qt Widgets, incluida la vista de archivos de Dolphin. Las páginas QML de Ajustes pueden conservar fondos opacos.
+
+```bash
+sudo apt install qt-style-kvantum
+python3 instalar.py --components cristal             # Revisar destinos
+python3 instalar.py --components cristal --apply     # Aplicar con copia
+```
+
+Requiere el desenfoque de KWin habilitado, como configura `acabado`. Conserva barra, widgets y pantallas. Reabre las aplicaciones para que carguen el estilo. Consulta [compatibilidad, prueba visual y restauración](docs/CRISTAL.md).
+
 ## Requisitos
 
 Entorno de origen: **Ubuntu, KDE Plasma 6.6.6 y Wayland con XWayland**. Otras versiones no se han comprobado.

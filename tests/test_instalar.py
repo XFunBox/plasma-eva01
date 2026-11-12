@@ -93,6 +93,28 @@ class InstallerTests(unittest.TestCase):
         self.run_installer("--apply", "--restore", str(backup), "--no-reload")
         self.assertEqual(before, self.snapshot())
 
+    def test_glass_is_optional_preserves_panels_and_restores_style(self):
+        shutil.copytree(INSTALLER.parent / "assets/cristal", self.assets / "cristal")
+        self.write("kdeglobals", b"[KDE]\nwidgetStyle=Breeze\n[Other]\nKeep=true\n")
+        self.write("Kvantum/kvantum.kvconfig", b"[General]\ntheme=Anterior\n[Applications]\nAnterior=especial\n")
+        self.write("plasma-org.kde.plasma.desktop-appletsrc", b"barra y widgets\n")
+        self.write("plasmarc", b"[Theme]\nname=eva-islas-estados\n")
+        self.write("kwinrc", b"[Desktops]\nNumber=2\n")
+        initial = self.snapshot()
+        self.run_installer("--components", "cristal", "--no-reload")
+        self.assertEqual(initial, self.snapshot())
+        self.run_installer("--components", "cristal", "--apply", "--no-reload")
+        backup = self.backup()
+        self.assertIn("widgetStyle=kvantum", (self.config / "kdeglobals").read_text())
+        self.assertIn("Keep=true", (self.config / "kdeglobals").read_text())
+        self.assertIn("theme=EVA01Glass", (self.config / "Kvantum/kvantum.kvconfig").read_text())
+        self.assertIn("Anterior=especial", (self.config / "Kvantum/kvantum.kvconfig").read_text())
+        self.assertEqual((self.config / "plasma-org.kde.plasma.desktop-appletsrc").read_bytes(), b"barra y widgets\n")
+        self.assertEqual((self.config / "plasmarc").read_bytes(), b"[Theme]\nname=eva-islas-estados\n")
+        self.assertEqual((self.config / "kwinrc").read_bytes(), b"[Desktops]\nNumber=2\n")
+        self.run_installer("--restore", str(backup), "--apply", "--no-reload")
+        self.assertEqual(initial, self.snapshot())
+
     def test_finish_preserves_layout_widgets_security_and_restores_exactly(self):
         shutil.copytree(INSTALLER.parent / "assets/acabado", self.assets / "acabado")
         self.write("plasma-org.kde.plasma.desktop-appletsrc", b"paneles y widgets intactos\n")

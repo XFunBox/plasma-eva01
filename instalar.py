@@ -16,7 +16,7 @@ from datetime import datetime, timezone
 
 
 DEFAULT_COMPONENTS = ("apariencia", "atajos", "ventanas", "terminales")
-COMPONENTS = (*DEFAULT_COMPONENTS, "escritorio", "acabado")
+COMPONENTS = (*DEFAULT_COMPONENTS, "escritorio", "acabado", "cristal")
 ASSETS = Path(__file__).resolve().parent / "assets"
 SCRIPT = "kwin/scripts/eva01-ordenar-ventanas/"
 TARGETS = {
@@ -55,6 +55,9 @@ FINISH_FILES = {
 TARGETS["acabado"] = [*(('config', name) for name in
                         ("kdeglobals", "kwinrc", "breezerc", "kscreenlockerrc")),
                        *(("data", name) for name in FINISH_FILES)]
+GLASS_FILES = ("EVA01Glass.kvconfig", "EVA01Glass.svg", "COPYING", "NOTICE")
+TARGETS["cristal"] = [("config", "kdeglobals"), ("config", "Kvantum/kvantum.kvconfig"),
+                       *[("config", "Kvantum/EVA01Glass/" + name) for name in GLASS_FILES]]
 KITTY_BEGIN = "# >>> plasma-eva01 >>>"
 KITTY_END = "# <<< plasma-eva01 <<<"
 
@@ -108,6 +111,9 @@ def reload_session(components, no_reload):
     run(["qdbus6", "org.kde.KWin", "/KWin", "org.kde.KWin.reconfigure"])
     if "ventanas" in components:
         run(["qdbus6", "org.kde.KWin", "/Scripting", "org.kde.kwin.Scripting.start"])
+    if "cristal" in components:
+        run(["dbus-send", "--session", "--type=signal", "/KGlobalSettings",
+             "org.kde.KGlobalSettings.notifyChange", "int32:2", "int32:0"])
     if "acabado" in components:
         # Qt/KDE recargan la paleta y los iconos sin reiniciar plasmashell.
         for change in (0, 4):
@@ -178,6 +184,11 @@ def make_plan(roots, components):
         ):
             for key, value in values.items():
                 setting(file, group, key, value)
+    if "cristal" in components:
+        for name in GLASS_FILES:
+            copy("config", "Kvantum/EVA01Glass/" + name, "cristal/" + name)
+        setting("kdeglobals", "KDE", "widgetStyle", "kvantum")
+        setting("Kvantum/kvantum.kvconfig", "General", "theme", "EVA01Glass")
     if "atajos" in components:
         shortcuts = json.loads(asset("atajos.json"))
         if not isinstance(shortcuts, list):
@@ -356,7 +367,7 @@ def apply_plan(roots, copies, settings):
 def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--apply", action="store_true", help="Aplicar los cambios (por defecto: simulación)")
-    parser.add_argument("--components", nargs="+", choices=COMPONENTS, help="Componentes; escritorio y acabado son opcionales")
+    parser.add_argument("--components", nargs="+", choices=COMPONENTS, help="Componentes; escritorio, acabado y cristal son opcionales")
     parser.add_argument("--restore", type=Path, metavar="RUTA_COPIA", help="Restaurar una copia validada")
     parser.add_argument("--no-reload", action="store_true", help="No contactar con la sesión KDE")
     args = parser.parse_args(argv)
@@ -382,6 +393,11 @@ def main(argv=None):
         raise ValueError("Ejecute como su usuario habitual, sin sudo ni root.")
     if not args.restore and not shutil.which("kwriteconfig6"):
         raise ValueError("Falta kwriteconfig6 (KDE Plasma 6).")
+    if not args.restore and "cristal" in components and not args.no_reload:
+        qtpaths = shutil.which("qtpaths6")
+        plugins = subprocess.check_output([qtpaths, "--plugin-dir"], text=True, timeout=10).strip() if qtpaths else ""
+        if not plugins or not (Path(plugins) / "styles/libkvantum.so").is_file():
+            raise ValueError("Falta Kvantum para Qt6. En Ubuntu: sudo apt install qt-style-kvantum. Use --no-reload solo para preparar archivos.")
     preflight_reload(args.no_reload)
     folder, rollback = backup_targets(roots, targets, components)
     print("Copia: " + str(folder), flush=True)
