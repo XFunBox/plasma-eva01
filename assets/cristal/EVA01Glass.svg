@@ -113,6 +113,11 @@
 <radialGradient fx="-44.5" fy="50" cx="-44.5" cy="50" gradientTransform="matrix(-1,0,0,-0.3333335,35,66.666675)" xlink:href="#linearGradient3837" id="radialGradient3233" r="3" gradientUnits="userSpaceOnUse"/>
 <radialGradient fx="-24.132002" fy="1084.2577" cx="-24.132002" cy="1084.2577" gradientTransform="matrix(2.757452,0,0,4.137926,145.54227,-3820.5782)" xlink:href="#linearGradient6806" id="radialGradient6742" r="3.625" gradientUnits="userSpaceOnUse"/>
 <radialGradient fx="-72.990623" fy="1084.4154" cx="-72.990623" cy="1084.4154" gradientTransform="matrix(0,-4.6896522,3.8620247,0,-4162.0409,324.90372)" xlink:href="#linearGradient6732" id="radialGradient6740" r="3.625" gradientUnits="userSpaceOnUse"/>
+
+<linearGradient id="eva-surface" x1="0" y1="0" x2="0" y2="1" gradientUnits="objectBoundingBox">
+ <stop offset="0" stop-color="#50455f"/><stop offset=".14" stop-color="#242435"/>
+ <stop offset=".52" stop-color="#171e2b"/><stop offset="1" stop-color="#362b48"/>
+</linearGradient>
 </defs>
 <ellipse cx="243" cy="608" rx="7.5" ry="7.5" style="fill:url(#linearGradient5105);stroke:#070707;color:#000" id="radio-normal"/>
 <path style="fill:#7fe13a;fill-rule:evenodd" id="tab-tear" d="m 330,780 h 15 v 15 h -15 z"/>
@@ -124,9 +129,9 @@
 <path style="fill:#a5a5a5" d="m 222.9062,667.5938 -.5,.0625 .3125,2.9688 .5,-.0312 -.3125,-3 z  m 4.1875,0 -.3125,3 .5,.0312 .3125,-2.9688 -.5,-.0625 z  m -8.8125,.9375 -.4688,.1562 .9375,2.8438 .4688,-.1562 z  m 13.4375,0 -.9375,2.8438 .4688,.1562 .9375,-2.8438 z  m -21.5938,4.5938 -.375,.3125 2.0312,2.25 .3438,-.3438 -2,-2.2188 z  m 29.75,0 -2,2.2188 .3438,.3438 2.0312,-2.25 -.375,-.3125 z  m -32.9375,3.4375 -.2812,.4062 2.4062,1.7812 .3125,-.4062 z  m 36.125,0 -2.4375,1.7812 .3125,.4062 2.4062,-1.7812 z  m -38.5,4.0625 -.2188,.4375 2.75,1.25 .1875,-.4688 -2.7188,-1.2188 z  m 40.875,0 -2.7188,1.2188 .1875,.4688 2.75,-1.25 -.2188,-.4375 z  m -42.4062,4.4375 -.0937,.5 2.9375,.625 .0937,-.5 z  m 43.9375,0 -2.9375,.625 .0937,.5 2.9375,-.625 z  m -41.0938,8.75 -2.9375,.625 .0937,.5 2.9375,-.625 z  m 38.25,0 -.0937,.5 2.9375,.625 .0937,-.5 z  m -37.0312,3.875 -2.75,1.25 .2188,.4375 2.7188,-1.2188 -.1875,-.4688 z  m 35.8125,0 -.1875,.4688 2.7188,1.2188 .2188,-.4375 -2.75,-1.25 z  m -33.8438,3.5625 -2.4062,1.7812 .2812,.4062 2.4375,-1.7812 z  m 31.875,0 -.3125,.4062 2.4375,1.7812 .2812,-.4062 z  m -29.1562,3.0625 -2.0312,2.25 .375,.3125 2,-2.2188 -.3438,-.3438 z  m 26.4375,0 -.3438,.3438 2,2.2188 .375,-.3125 -2.0312,-2.25 z "/>
 </g>
 </g>
-<path style="fill:#2f2f2f;fill-rule:evenodd" id="menu-normal" d="m 117,662 48,0 0,48 -48,0 z"/>
-<path style="fill:#373737;fill-rule:evenodd" id="menu-normal-left" d="m 111.9989,662 5,0 0,48 -5,0"/>
-<path style="fill:#393939;fill-rule:evenodd" id="menu-normal-topleft" d="m 116.9989,657 -4.9989,0 -.001,5 5,0 z "/>
+<path style="fill:url(#eva-surface);fill-rule:evenodd" id="menu-normal" d="m 117,662 48,0 0,48 -48,0 z"/>
+<path style="fill:#4a4056;fill-rule:evenodd" id="menu-normal-left" d="m 111.9989,662 5,0 0,48 -5,0"/>
+<path style="fill:#84758e;fill-rule:evenodd" id="menu-normal-topleft" d="m 116.9989,657 -4.9989,0 -.001,5 5,0 z "/>
 <g id="arrow-up-normal" transform="translate(12,-423.49287)">
 <rect width="24" x="-607.49298" y="8" height="24" style="opacity:0;fill:#fff" transform="rotate(-90)"/>
 <path style="fill:#eeeeec" d="m 8.5,600.4928 11.5,-11.9999 11.5,12.0001 Z "/>
@@ -185,12 +190,12 @@
 <use width="450" height="1230" xlink:href="#group-normal-left" id="group-normal-bottom" transform="rotate(-90,404,753)"/>
 <use width="450" height="1230" xlink:href="#group-normal-topleft" id="group-normal-bottomleft" transform="rotate(-90,404,753)"/>
 <ellipse cx="263" cy="608" rx="7.5" ry="7.5" style="fill:#191a22;stroke:#070707;color:#000" id="radio-focused"/>
-<path style="fill:#393939;fill-rule:evenodd" id="menu-normal-top" d="m 165,657 0,5 -48,0 0,-5 z"/>
-<path style="fill:#282828;fill-rule:evenodd" id="menu-normal-topright" d="m 169.999,662 0,-4.9989 -5,-.001 0,5 z "/>
-<path style="fill:#1b1b1b;fill-rule:evenodd" id="menu-normal-right" d="m 169.9988,662 -5,0 0,48 5,0 z"/>
-<path style="fill:#1b1b1b;fill-rule:evenodd" id="menu-normal-bottomright" d="m 164.9988,715 4.9989,0 .001,-5 -5,0 z "/>
-<path style="fill:#171717;fill-rule:evenodd" id="menu-normal-bottom" d="m 117,715 0,-5 48,0 0,5 z"/>
-<path style="fill:#282828;fill-rule:evenodd" id="menu-normal-bottomleft" d="m 112,710 0,4.9989 5,0 0,-5 z"/>
+<path style="fill:#c1accf;fill-rule:evenodd" id="menu-normal-top" d="m 165,657 0,5 -48,0 0,-5 z"/>
+<path style="fill:#84758e;fill-rule:evenodd" id="menu-normal-topright" d="m 169.999,662 0,-4.9989 -5,-.001 0,5 z "/>
+<path style="fill:#4a4056;fill-rule:evenodd" id="menu-normal-right" d="m 169.9988,662 -5,0 0,48 5,0 z"/>
+<path style="fill:#79618f;fill-rule:evenodd" id="menu-normal-bottomright" d="m 164.9988,715 4.9989,0 .001,-5 -5,0 z "/>
+<path style="fill:#79618f;fill-rule:evenodd" id="menu-normal-bottom" d="m 117,715 0,-5 48,0 0,5 z"/>
+<path style="fill:#79618f;fill-rule:evenodd" id="menu-normal-bottomleft" d="m 112,710 0,4.9989 5,0 0,-5 z"/>
 <path style="fill:#1b1b1b;fill-rule:evenodd" id="common-normal-top" d="m 136,865 h -30 v 1 h 30 z"/>
 <path style="fill:#1b1b1b;fill-rule:evenodd" id="common-normal-right" d="m 137,866 v 30 h -1 v -30 z "/>
 <path style="fill:#1b1b1b;fill-rule:evenodd" id="common-normal-bottom" d="m 106,897 h 30 v -1 h -30 z"/>
@@ -449,7 +454,7 @@
 <path style="opacity:0;fill-rule:evenodd" id="floating-button-focused" d="m 63,800 0,-32 32,0 0,32 -32,0 z"/>
 <path style="opacity:0;fill-rule:evenodd" id="floating-button-toggled" d="m 103,800 0,-32 32,0 0,32 -32,0 z"/>
 <use width="100%" height="100%" xlink:href="#tabbarframe-normal-left" id="tabbarframe-normal-right" transform="matrix(-1,0,0,1,320,0)"/>
-<path style="fill:url(#linearGradient5047);fill-rule:evenodd" id="menubar-normal" d="m 265,640 h 30 v 30 h -30 z"/>
+<path style="fill:url(#eva-surface);fill-rule:evenodd" id="menubar-normal" d="m 265,640 h 30 v 30 h -30 z"/>
 <use width="100%" height="100%" xlink:href="#menubar-normal" id="menubar-normal-left" transform="matrix(0.16666667,0,0,1,215.83333,0)"/>
 <use width="100%" height="100%" xlink:href="#menubar-normal" id="menubar-normal-right" transform="matrix(0.16666667,0,0,1,250.83333,0)"/>
 <path style="fill:#080808;fill-rule:evenodd" id="menubar-normal-bottom" d="m 265,670 h 30 v 1 h -30 z"/>
@@ -1032,7 +1037,7 @@
 <path style="fill:#313133" d="m 17.5,880 v 0.5 h 58 V 880 Z"/>
 </g>
 <path style="fill:#b74aff" id="tooltip-shadow-hint-top" d="m 399,783 h 2.5 v 3 H 399 Z"/>
-<path style="fill:#0a0a0a;fill-rule:evenodd" id="tooltip-normal" d="m 376,862 h 48 v 48 h -48 z"/>
+<path style="fill:url(#eva-surface);fill-rule:evenodd" id="tooltip-normal" d="m 376,862 h 48 v 48 h -48 z"/>
 <g style="fill-rule:evenodd" id="tooltip-shadow-left" transform="translate(353.49965,-93)">
 <path style="opacity:.4;fill:url(#linearGradient4953)" d="m 12.5005,882 v 60 h 5 v -60 z"/>
 <path style="fill:#0a0a0a" d="m 15.5003,882 v 60 h 3 v -60 z"/>
@@ -1135,7 +1140,7 @@
 <use width="100%" height="100%" style="opacity:.45" xlink:href="#radio-checked-normal" id="radio-checked-normal-inactive" transform="translate(214)"/>
 <use width="100%" height="100%" xlink:href="#slidercursor-disabled" id="slidercursor-normal-inactive" transform="translate(294,-26)"/>
 <use width="100%" height="100%" xlink:href="#slidercursor-tickless-disabled" id="slidercursor-tickless-normal-inactive" transform="translate(268)"/>
-<path style="fill:#191a22;fill-rule:evenodd" id="menubar-normal-inactive" d="m 469,648 h 30 v 30 h -30 z"/>
+<path style="fill:url(#eva-surface);fill-rule:evenodd" id="menubar-normal-inactive" d="m 469,648 h 30 v 30 h -30 z"/>
 <path style="fill:#1b1b1b;fill-rule:evenodd" id="menubar-normal-inactive-bottom" d="m 469,678 h 30 v 1 h -30 z"/>
 <use width="100%" height="100%" xlink:href="#menubar-normal-inactive" id="menubar-normal-inactive-left" transform="matrix(0.16666667,0,0,1,385.83333,0)"/>
 <path style="fill:#1b1b1b;fill-rule:evenodd" id="menubar-normal-inactive-bottomleft" d="m 464,678 h 5 v 1 h -5 z"/>
@@ -1354,4 +1359,8 @@
 <use width="100%" height="100%" xlink:href="#button-focused-inactive-left" id="button-focused-inactive-bottom" transform="rotate(-90,-146.25,28.75)"/>
 <use width="100%" height="100%" xlink:href="#button-focused-inactive-topleft" id="button-focused-inactive-bottomleft" transform="rotate(-90,-146.25,28.75)"/>
 <use width="100%" height="100%" xlink:href="#button-focused-inactive-topleft" id="button-focused-inactive-bottomright" transform="rotate(-180,-146.25,28.75)"/>
+<g id="eva-window-normal">
+ <rect x="0" y="0" width="400" height="400" fill="url(#eva-surface)"/>
+ <rect x="0" y="0" width="400" height="1" fill="#eee4ff" fill-opacity=".38"/>
+</g>
 </svg>

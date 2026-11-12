@@ -107,9 +107,12 @@ class InstallerTests(unittest.TestCase):
         self.assertEqual(before, self.snapshot())
         self.run_installer("--components", "cristal-barra", "--apply", "--no-reload")
         backup = self.backup()
-        self.assertIn("name=eva-islas-cristal", (self.config / "plasmarc").read_text())
+        self.assertIn("name=eva-cristal", (self.config / "plasmarc").read_text())
         self.assertIn("Keep=true", (self.config / "plasmarc").read_text())
-        theme = self.data / "plasma/desktoptheme/eva-islas-cristal"
+        theme = self.data / "plasma/desktoptheme/eva-cristal"
+        for name in ("dialogs/background.svg", "widgets/tooltip.svg",
+                     "translucent/dialogs/background.svg", "translucent/widgets/tooltip.svg"):
+            self.assertTrue((theme / name).is_file(), name)
         self.assertEqual((theme / "widgets/tasks.svg").read_bytes(), (self.assets / "barra/tema/widgets/tasks.svg").read_bytes())
         for name in ("plasma-org.kde.plasma.desktop-appletsrc", "kwinrc", "kdeglobals"):
             self.assertEqual(before["config/" + name], self.snapshot()["config/" + name])

@@ -44,3 +44,15 @@ python3 instalar.py --restore /ruta/exacta/de/la/copia --apply
 La restauración recupera archivos completos; revisa el plan si has hecho cambios posteriores. No desinstala el paquete Kvantum del sistema.
 
 La prueba aislada cubre simulación, instalación, conservación de barra y configuración de pantallas, y restauración exacta de archivos y permisos. La prueba visual utiliza Kvantum 1.1.5 para Qt6 y datos ficticios. Los recursos derivan de [Kvantum](https://github.com/tsujan/Kvantum), bajo GPL-3.0-or-later, con licencia y atribución en el directorio del tema.
+
+## Material coordinado con Plasma
+
+El fondo de ventanas y diálogos Qt Widgets incorpora un degradado grafito a
+morado y un reflejo superior. Los menús, barras de herramientas y ayudas
+usan la misma paleta. Se conservan los niveles de opacidad 86 %/90 % y el
+texto sólido. Las vistas que pintan un fondo propio pueden cubrir el material.
+La sección `Window` y los interiores SVG se basan en la
+[configuración oficial de Kvantum](https://github.com/tsujan/Kvantum/blob/master/Kvantum/doc/Theme-Config).
+
+Combina `cristal` con `cristal-barra` para incluir las superficies de Plasma;
+véase [el acabado del escritorio](CRISTAL-BARRA.md#extensión-al-escritorio).

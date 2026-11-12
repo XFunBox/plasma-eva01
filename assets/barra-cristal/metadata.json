@@ -1,9 +1,9 @@
 {
   "KPlugin": {
-    "Id": "eva-islas-cristal",
-    "Name": "EVA dos islas · cristal",
-    "Description": "Cristal oscuro con reflejos suaves, desenfoque y estados EVA",
-    "Version": "1.0",
+    "Id": "eva-cristal",
+    "Name": "EVA · cristal",
+    "Description": "Cristal oscuro para paneles, diálogos y ayudas de Plasma",
+    "Version": "1.1",
     "License": "LGPL-2.0-or-later",
     "Authors": [
       {

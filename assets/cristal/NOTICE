@@ -4,3 +4,5 @@ Licencia GPL-3.0-or-later. Fuente: https://github.com/tsujan/Kvantum
 Recursos obtenidos del paquete Ubuntu qt-style-kvantum-themes 1.1.5-1.
 Adaptación XFunBox 2026: paleta EVA-01, transparencia del fondo 86 %, menús 90 %, desenfoque y vistas Dolphin transparentes.
 Se conservan SVG y configuración editables, con la licencia completa en COPYING.
+Extensión 2026-11-12: material con degradado y reflejo para ventanas, diálogos,
+menús, barras de herramientas y ayudas; conserva texto y controles sólidos.

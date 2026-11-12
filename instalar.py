@@ -58,7 +58,7 @@ TARGETS["acabado"] = [*(('config', name) for name in
 GLASS_FILES = ("EVA01Glass.kvconfig", "EVA01Glass.svg", "COPYING", "NOTICE")
 TARGETS["cristal"] = [("config", "kdeglobals"), ("config", "Kvantum/kvantum.kvconfig"),
                        *[("config", "Kvantum/EVA01Glass/" + name) for name in GLASS_FILES]]
-BAR_GLASS_THEME = "plasma/desktoptheme/eva-islas-cristal/"
+BAR_GLASS_THEME = "plasma/desktoptheme/eva-cristal/"
 BAR_GLASS_FILES = {
     name: "barra/tema/" + name for name in (
         "COPYING.LIB", "COPYRIGHT.upstream", "widgets/tasks.svg",
@@ -68,6 +68,10 @@ BAR_GLASS_FILES = {
 BAR_GLASS_FILES.update({name: "barra-cristal/" + name for name in ("metadata.json", "plasmarc", "NOTICE")})
 BAR_GLASS_FILES.update({name: "barra-cristal/panel-background.svg" for name in
                         ("widgets/panel-background.svg", "translucent/widgets/panel-background.svg")})
+for destination, source in (("dialogs/background.svg", "dialog-background.svg"),
+                            ("widgets/tooltip.svg", "tooltip.svg")):
+    for prefix in ("", "translucent/"):
+        BAR_GLASS_FILES[prefix + destination] = "barra-cristal/" + source
 TARGETS["cristal-barra"] = [("config", "plasmarc"), *(("data", BAR_GLASS_THEME + name) for name in BAR_GLASS_FILES)]
 KITTY_BEGIN = "# >>> plasma-eva01 >>>"
 KITTY_END = "# <<< plasma-eva01 <<<"
@@ -208,7 +212,7 @@ def make_plan(roots, components):
     if "cristal-barra" in components:
         for name, source in BAR_GLASS_FILES.items():
             copy("data", BAR_GLASS_THEME + name, source)
-        setting("plasmarc", "Theme", "name", "eva-islas-cristal")
+        setting("plasmarc", "Theme", "name", "eva-cristal")
     if "atajos" in components:
         shortcuts = json.loads(asset("atajos.json"))
         if not isinstance(shortcuts, list):

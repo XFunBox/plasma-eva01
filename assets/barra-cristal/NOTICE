@@ -14,3 +14,8 @@ Los demás recursos se heredan de Breeze. No incluye ni sustituye iconos.
 El mismo tratamiento se incluye en las variantes opaca y translúcida.
 
 Adaptación cristal 2026 XFunBox: fondo translúcido con degradado, reflejos blancos y morados; conserva máscaras, sombras, márgenes y estados de tareas originales. Variantes opaque/solid sin cambios.
+
+Extensión 2026-11-12: dialogs/background.svg y widgets/tooltip.svg derivados de
+los recursos Breeze de libplasma 6.6.6 instalados con Plasma, LGPL-2.0-or-later.
+Conserva geometrías, máscaras, sombras y márgenes; añade degradado oscuro y
+reflejos en los bordes. No modifica el contenido ni la distribución de widgets.

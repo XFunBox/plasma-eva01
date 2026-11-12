@@ -466,7 +466,7 @@ text.margin.right=4
 text.margin.top=0
 text.margin.bottom=2
 text.normal.color=white
-text.focus.color=#3a90eb
+text.focus.color=#99ff40
 text.shadow=false
 min_width=0
 min_height=0
@@ -537,3 +537,10 @@ frame.element=tooltip
 inherits=GenericFrame
 frame=false
 interior=false
+
+[Window]
+interior=true
+interior.element=eva-window
+interior.x.patternsize=0
+interior.y.patternsize=0
+frame=false

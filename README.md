@@ -49,7 +49,7 @@ Requiere el desenfoque de KWin habilitado, como configura `acabado`. Conserva ba
 
 ## Barra de cristal
 
-`cristal-barra` añade una superficie translúcida con reflejos, contorno y desenfoque, inspirada en Liquid Glass. Conserva la distribución, iconos, widgets y estados de tareas actuales. No necesita Kvantum ni reinstalar la barra.
+`cristal-barra` añade una superficie translúcida con reflejos, contorno y desenfoque, inspirada en Liquid Glass. Conserva la distribución, iconos, widgets y estados de tareas actuales. Incluye el material de diálogos y ayudas emergentes de Plasma. No necesita Kvantum ni reinstalar la barra. Combínalo con `cristal` para extender el acabado a ventanas y menús Qt Widgets.
 
 ```bash
 python3 instalar.py --components cristal-barra --apply
