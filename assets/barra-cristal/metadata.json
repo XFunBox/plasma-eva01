@@ -1,0 +1,15 @@
+{
+  "KPlugin": {
+    "Id": "eva-islas-cristal",
+    "Name": "EVA dos islas · cristal",
+    "Description": "Cristal oscuro con reflejos suaves, desenfoque y estados EVA",
+    "Version": "1.0",
+    "License": "LGPL-2.0-or-later",
+    "Authors": [
+      {
+        "Name": "KDE Visual Design Group; adaptación local Sendoa"
+      }
+    ]
+  },
+  "X-Plasma-API": "5.0"
+}

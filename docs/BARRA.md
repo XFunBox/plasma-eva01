@@ -10,6 +10,8 @@ Aplicaciones centradas en una isla y utilidades a la derecha en otra. Ambas flot
 
 La captura corresponde al equipo de origen, con los favoritos que ya tenía. El repositorio no instala esos accesos personales. El indicador de escritorios virtuales se retiró allí a petición del usuario; el instalador reutilizable conserva los widgets que encuentre.
 
+Para cambiar solo el material de una barra ya configurada, usa el componente [cristal-barra](CRISTAL-BARRA.md): conserva su distribución y no requiere reinstalar las islas.
+
 ## Instalar de forma explícita
 
 Requiere KDE Plasma 6, una sesión gráfica activa, `/usr/bin/python3`, `python3-pyqt6`, `qdbus6` y un gestor de servicios systemd de usuario. El diseño se comprobó en Plasma 6.6.6 con dos pantallas de escalas diferentes. Otros tamaños pueden necesitar ajustes para evitar que las islas se solapen.

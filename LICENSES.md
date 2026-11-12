@@ -11,3 +11,5 @@ El código propio, los instaladores y los recursos propios de Plasma EVA-01 usan
 `assets/acabado/EVA01Finish.colors` deriva de `EVA01Dark.colors` y conserva autores y LGPL-2.0-or-later. El fondo `eva01-lock.svg` es propio (MIT).
 
 `assets/acabado/icons/` adapta once iconos de **Breeze Icons** (KDE), bajo **LGPL-3.0-or-later con la excepción KDE e.V.**. Incluye fuentes SVG editables, `NOTICE`, `COPYRIGHT.upstream` y textos GPL/LGPL. Los demás iconos se heredan del tema instalado, sin redistribuir aplicaciones o iconos personales.
+
+`assets/barra-cristal/` adapta el fondo de panel Breeze/EVA bajo **LGPL-2.0-or-later**. El instalador reutiliza la licencia, atribución upstream, estados de tareas y variantes opacas de `assets/barra/tema/`. Incluye recursos SVG editables y un `NOTICE` de los cambios.

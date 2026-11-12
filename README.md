@@ -47,6 +47,16 @@ python3 instalar.py --components cristal --apply     # Aplicar con copia
 
 Requiere el desenfoque de KWin habilitado, como configura `acabado`. Conserva barra, widgets y pantallas. Reabre las aplicaciones para que carguen el estilo. Consulta [compatibilidad, prueba visual y restauración](docs/CRISTAL.md).
 
+## Barra de cristal
+
+`cristal-barra` añade una superficie translúcida con reflejos, contorno y desenfoque, inspirada en Liquid Glass. Conserva la distribución, iconos, widgets y estados de tareas actuales. No necesita Kvantum ni reinstalar la barra.
+
+```bash
+python3 instalar.py --components cristal-barra --apply
+```
+
+[Vista previa, requisitos y restauración](docs/CRISTAL-BARRA.md). Es una aproximación de KDE mediante SVG y desenfoque, sin refracción dinámica.
+
 ## Requisitos
 
 Entorno de origen: **Ubuntu, KDE Plasma 6.6.6 y Wayland con XWayland**. Otras versiones no se han comprobado.

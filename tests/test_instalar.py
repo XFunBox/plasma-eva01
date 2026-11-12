@@ -93,6 +93,29 @@ class InstallerTests(unittest.TestCase):
         self.run_installer("--apply", "--restore", str(backup), "--no-reload")
         self.assertEqual(before, self.snapshot())
 
+    def test_panel_glass_preserves_layout_and_restores_theme(self):
+        for name in ("barra/tema", "barra-cristal"):
+            source = INSTALLER.parent / "assets" / name
+            if source.exists():
+                shutil.copytree(source, self.assets / name)
+        self.write("plasmarc", b"[Theme]\nname=eva-islas-estados\n[Other]\nKeep=true\n")
+        self.write("plasma-org.kde.plasma.desktop-appletsrc", b"paneles y widgets originales\n")
+        self.write("kwinrc", b"[Desktops]\nNumber=2\n")
+        self.write("kdeglobals", b"[KDE]\nwidgetStyle=kvantum\n")
+        before = self.snapshot()
+        self.run_installer("--components", "cristal-barra")
+        self.assertEqual(before, self.snapshot())
+        self.run_installer("--components", "cristal-barra", "--apply", "--no-reload")
+        backup = self.backup()
+        self.assertIn("name=eva-islas-cristal", (self.config / "plasmarc").read_text())
+        self.assertIn("Keep=true", (self.config / "plasmarc").read_text())
+        theme = self.data / "plasma/desktoptheme/eva-islas-cristal"
+        self.assertEqual((theme / "widgets/tasks.svg").read_bytes(), (self.assets / "barra/tema/widgets/tasks.svg").read_bytes())
+        for name in ("plasma-org.kde.plasma.desktop-appletsrc", "kwinrc", "kdeglobals"):
+            self.assertEqual(before["config/" + name], self.snapshot()["config/" + name])
+        self.run_installer("--restore", str(backup), "--apply", "--no-reload")
+        self.assertEqual(before, self.snapshot())
+
     def test_glass_is_optional_preserves_panels_and_restores_style(self):
         shutil.copytree(INSTALLER.parent / "assets/cristal", self.assets / "cristal")
         self.write("kdeglobals", b"[KDE]\nwidgetStyle=Breeze\n[Other]\nKeep=true\n")
