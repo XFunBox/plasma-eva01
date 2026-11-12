@@ -1,12 +1,12 @@
 # Plasma EVA-01
 
-Un escritorio KDE Plasma oscuro, con verde vivo y morado: colores, terminales, atajos para teclado de 60 % y aplicaciones translúcidas integradas en el escritorio. Instalación por usuario, por componentes y con copia para volver atrás.
+Un escritorio KDE Plasma oscuro, con verde vivo y morado: colores, terminales, atajos para teclado de 60 % y superficies de cristal con degradados, reflejos suaves y desenfoque. Instalación por usuario, por componentes y con copia para volver atrás.
 
 ![Escritorio EVA-01 con Dolphin a la izquierda y btop y terminal a la derecha](docs/images/escritorio.png)
 
 > Capturas reales anonimizadas: se han tapado accesos personales, contenido de carpetas, usuario, equipo y datos de red. El fondo ilustrado muestra el entorno de origen; el repositorio no distribuye ni instala ese fondo.
 
-[Instalación](#instalación) · [Barra de tareas](docs/BARRA.md) · [Paneles de escritorio](#paneles-de-escritorio) · [Atajos](#atajos) · [Restaurar](#restaurar) · [NERV Deck](docs/NERV-DECK.md)
+[Cristal en KDE](#cristal-en-kde) · [Instalación](#instalación) · [Barra de tareas](docs/BARRA.md) · [Paneles de escritorio](#paneles-de-escritorio) · [Atajos](#atajos) · [Restaurar](#restaurar) · [NERV Deck](docs/NERV-DECK.md)
 
 ## Qué incluye
 
@@ -16,11 +16,34 @@ Un escritorio KDE Plasma oscuro, con verde vivo y morado: colores, terminales, a
 | `terminales` | Paletas para Kitty, Konsole y Ptyxis; Zsh con ruta y reloj que se actualiza cada segundo. |
 | `atajos` | Acciones de ventana y cambio de escritorio con letras y números. |
 | `ventanas` | Script de KWin para ordenar ventanas y recuperar la distribución anterior. |
+| `acabado` · opcional | Paleta EVA, carpetas moradas, decoración Breeze, desenfoque, animaciones y pantalla de bloqueo. |
+| `cristal` · opcional | Ventanas, diálogos y menús Qt Widgets con Kvantum: degradado oscuro, reflejo superior y texto sólido. |
+| `cristal-barra` · opcional | Tema Plasma `eva-cristal`: material translúcido para paneles, diálogos y ayudas emergentes. |
 | `escritorio` · opcional | Dolphin grande a la izquierda; btop arriba y terminal debajo a la derecha. Inicio automático en KDE. |
 | Barra «dos islas» · separada | Aplicaciones centradas y utilidades a la derecha; marcas de estado y favoritos sincronizados entre paneles seleccionados. |
 | NERV Deck · separado | Widget multimedia y ventana flotante para Spotify/Spotifast mediante MPRIS. |
 
 El instalador principal conserva la barra de tareas, el fondo, la configuración de pantallas y el número de escritorios. Los paneles de escritorio, la barra «dos islas» y NERV Deck se instalan de forma explícita.
+
+## Cristal en KDE
+
+![Muestra del acabado de cristal en ventanas, menús, ayudas y barra](docs/images/cristal-escritorio.png)
+
+Esta muestra usa datos ficticios y combina controles Qt reales con recursos SVG del tema; no es una captura de todo el escritorio. El acabado está inspirado en Liquid Glass: grafito y morado, reflejo superior, bordes suaves y desenfoque nativo de KWin. El texto y los iconos permanecen sólidos. Es una aproximación mediante temas SVG, sin refracción dinámica ni deformación del fondo.
+
+Para instalar el conjunto de acabado y cristal sobre tu distribución actual:
+
+```bash
+sudo apt install qt-style-kvantum libglib2.0-bin
+python3 instalar.py --components acabado cristal cristal-barra          # Revisar el plan
+python3 instalar.py --components acabado cristal cristal-barra --apply  # Aplicar con copia
+```
+
+Estos componentes son opcionales: `python3 instalar.py --apply` instala únicamente `apariencia`, `atajos`, `ventanas` y `terminales`. El conjunto anterior conserva la distribución de paneles, widgets, favoritos y pantallas; no ejecuta los instaladores de barra ni NERV Deck. `cristal-barra` cambia el estilo visual de Plasma a `eva-cristal`.
+
+El material llega a ventanas y menús Qt Widgets, incluida la vista de Dolphin, y a superficies de Plasma que usan los fondos del tema, como menús del lanzador, calendario, bandeja y ayudas emergentes. Las páginas QML de Ajustes y aplicaciones GTK, Electron o con fondos propios pueden seguir opacas. Se conservan las variantes opacas y la opacidad adaptativa del panel. Algunas aplicaciones abiertas necesitan reabrirse para cargar los recursos nuevos; no se cierran ni se reinicia Plasma al aplicar el cristal.
+
+Comprobado en Plasma 6.6.6 sobre Wayland, con 63 pruebas automatizadas, instalación/restauración aislada y renderizado QtSvg y Kvantum. Consulta el alcance de cada componente a continuación y la [guía de restauración](#restaurar) antes de recuperar una copia.
 
 ## Acabado visual EVA-01
 
@@ -37,7 +60,7 @@ No aplica `apariencia`, `escritorio` ni los instaladores de barra/NERV Deck: con
 
 ## Transparencia tipo Savia
 
-El componente opcional `cristal` añade superficies al 86 % de opacidad y menús al 90 %, con texto sólido, acentos verdes y desenfoque. Utiliza Kvantum para las aplicaciones Qt Widgets, incluida la vista de archivos de Dolphin. Las páginas QML de Ajustes pueden conservar fondos opacos.
+El componente opcional `cristal` añade fondos de ventanas y diálogos con degradado grafito/morado y reflejo superior, al 86 % de opacidad, y menús al 90 %, con texto sólido, acentos verdes y desenfoque. Utiliza Kvantum para las aplicaciones Qt Widgets, incluida la vista de archivos de Dolphin. Las páginas QML de Ajustes pueden conservar fondos opacos.
 
 ```bash
 sudo apt install qt-style-kvantum
@@ -63,6 +86,8 @@ Entorno de origen: **Ubuntu, KDE Plasma 6.6.6 y Wayland con XWayland**. Otras ve
 
 - Python **3.10+**, `kwriteconfig6` y `qdbus6` para el instalador principal.
 - Zsh para `terminales`; instalar las aplicaciones cuyas paletas quieras utilizar.
+- Para `cristal`: Kvantum para Qt 6 (`qt-style-kvantum` en Ubuntu) y desenfoque de KWin habilitado.
+- Para `cristal-barra`: `gdbus` (`libglib2.0-bin` en Ubuntu), además de las herramientas KDE anteriores.
 - Para `escritorio`: Konsole, Dolphin, btop, `kscreen-doctor`, XWayland y el módulo Python `Xlib` (`python3-xlib` en Ubuntu).
 - Para NERV Deck: requisitos adicionales en [su guía](docs/NERV-DECK.md).
 
